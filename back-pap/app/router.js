@@ -13,4 +13,6 @@ module.exports = app => {
 
   // router.get('/', controller.home.index);
   router.get('/home', gzip, controller.home.index)
+  require('./router/admin')(app)
+  require('./router/web')(app)
 };
