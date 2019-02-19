@@ -73,11 +73,12 @@ export default function request(url, option) {
    * Maybe url has the same parameters
    */
   const fingerprint = url + (options.body ? JSON.stringify(options.body) : '');
+  // console.log(fingerprint)
   const hashcode = hash
     .sha256()
     .update(fingerprint)
     .digest('hex');
-
+  // console.log(hashcode)
   const defaultOptions = {
     credentials: 'include',
   };

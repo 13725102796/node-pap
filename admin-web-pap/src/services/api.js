@@ -1,6 +1,6 @@
 import { stringify } from 'qs';
 import request from '@/utils/request';
-
+const fontUrl = 'http://127.0.0.1:7001/admin'
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
@@ -104,7 +104,7 @@ export async function updateFakeList(params) {
 }
 
 export async function fakeAccountLogin(params) {
-  return request('/api/login/account', {
+  return request( fontUrl + '/api/login/account', {
     method: 'POST',
     body: params,
   });

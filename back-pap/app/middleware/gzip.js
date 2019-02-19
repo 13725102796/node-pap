@@ -4,7 +4,7 @@ const zlib = require('zlib');
 
 module.exports = options => {
   return async function gzip(ctx, next) {
-    ctx.set('Access-Control-Allow-Origin', 'http://localhost:8080'); // * 这个表示任意域名都可以访问，这样写不能携带cookie了。 || 'http://localhost:5080'
+    ctx.set('Access-Control-Allow-Origin', 'http://localhost:8080','http://localhost:8000'); // * 这个表示任意域名都可以访问，这样写不能携带cookie了。 || 'http://localhost:5080'
 
     ctx.set('Access-Control-Allow-Credentials', true); // 允许服务器端发送Cookie数据,
     // 若前端上axios.defaults.withCredentials = true设置为true了，

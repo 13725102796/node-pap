@@ -9,7 +9,7 @@ class HomeController extends Controller {
     } = this;
     const query = ctx.query
     const title = await this.getTitle(query.id)
-    console.log(query)
+    // console.log(query)
     ctx.body = {
       err_code: 10000,
       // msg: 'success',

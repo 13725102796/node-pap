@@ -7,9 +7,7 @@ class LoginController extends Controller {
     const {
       ctx
     } = this;
-    const query = ctx.query
-    // const title = await this.getTitle(query.id)
-    console.log(query)
+    console.log(ctx.request.body)
     ctx.body = {
       err_code: 10000,
       // msg: 'success',
@@ -18,4 +16,4 @@ class LoginController extends Controller {
   }
 }
 
-module.exports = HomeController;
+module.exports = LoginController;

@@ -7,11 +7,24 @@ import Login from '@/components/Login';
 import styles from './Login.less';
 
 const { Tab, UserName, Password, Mobile, Captcha, Submit } = Login;
-
-@connect(({ login, loading }) => ({
-  login,
-  submitting: loading.effects['login/login'],
-}))
+/**
+ * @ connect(state,loading)
+ * state代表 dva该login的state对象
+ * loading 代表 dva-loading 注册的对象
+ * {
+ *  global: false,
+ *  models: {},
+ *  effects: {}  // 每次请求都会该effect里的状态值改为true，直到请求结束则变回false
+ * }
+ */
+@connect(({ login, loading }) => {
+  console.log(login)
+  console.log(loading)
+  return {
+    login,
+    submitting: loading.effects['login/login'],
+  }
+})
 class LoginPage extends Component {
   state = {
     type: 'account',
@@ -39,18 +52,18 @@ class LoginPage extends Component {
       });
     });
 
-  handleSubmit = (err, values) => {
+  handleSubmit = (values) => {
+    console.log(values)
     const { type } = this.state;
-    if (!err) {
-      const { dispatch } = this.props;
-      dispatch({
-        type: 'login/login',
-        payload: {
-          ...values,
-          type,
-        },
-      });
-    }
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'login/login',
+      payload: {
+        ...values,
+        type,
+      },
+    });
+    
   };
 
   changeAutoLogin = e => {
@@ -64,8 +77,10 @@ class LoginPage extends Component {
   );
 
   render() {
-    console.log(submitting)
+    // console.log(submitting)
     const { login, submitting } = this.props;
+    
+    // console.log(login)
     const { type, autoLogin } = this.state;
     return (
       <div className={styles.main}>

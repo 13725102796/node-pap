@@ -77,12 +77,14 @@ class Login extends Component {
     const { form, onSubmit } = this.props;
     const activeFileds = active[type];
     form.validateFields(activeFileds, { force: true }, (err, values) => {
-      onSubmit(err, values);
+      if(!err) onSubmit(values);
+      
     });
   };
 
   render() {
     const { className, children } = this.props;
+    // console.log(children)
     const { type, tabs } = this.state;
     const TabChildren = [];
     const otherChildren = [];

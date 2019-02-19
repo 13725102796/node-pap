@@ -8,11 +8,11 @@ module.exports = app => {
   const { router, controller } = app;
   // const url = app.originalUrl
 
-  console.log(app)
+  // console.log(app)
   
 
   // router.get('/', controller.home.index);
-  router.get('/home', gzip, controller.home.index)
+  // router.get('/home', gzip, controller.home.index)
   require('./router/admin')(app)
   require('./router/web')(app)
 };
