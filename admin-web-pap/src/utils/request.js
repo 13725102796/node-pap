@@ -3,6 +3,7 @@ import { notification } from 'antd';
 import router from 'umi/router';
 import hash from 'hash.js';
 import { isAntdPro } from './utils';
+import cookie from './cookie'
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -64,6 +65,7 @@ const cachedSave = (response, hashcode) => {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, option) {
+  console.log(cookie.getItem('monitor_count'),2131321321)
   const options = {
     expirys: isAntdPro(),
     ...option,
@@ -78,9 +80,10 @@ export default function request(url, option) {
     .sha256()
     .update(fingerprint)
     .digest('hex');
-  // console.log(hashcode)
+  
   const defaultOptions = {
     credentials: 'include',
+    headers: {'x-csrf-token': cookie.getItem('csrfToken') || ''},
   };
   const newOptions = { ...defaultOptions, ...options };
   if (

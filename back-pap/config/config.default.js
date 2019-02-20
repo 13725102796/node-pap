@@ -21,28 +21,35 @@ module.exports = appInfo => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1550453563025_8140';
 
-  
+
 
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
   };
-
   //跨域配置
+  config.cors = {
+    // origin: 'http://localhost:8000',
+    credentials:true,
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+  };
+
   config.security = {
     csrf: {
-      enable: false,
-      ignoreJSON: true
+      // useSession: true, // 默认为 false，当设置为 true 时，将会把 csrf token 保存到 Session 中
+      // cookieName: 'csrfToken', // Cookie 中的字段名，默认为 csrfToken
+      // sessionName: 'csrfToken', // Session 中的字段名，默认为 csrfToken
+      // enable: false,
+      ignore:ctx=>{
+        const domainWhiteList = ctx.app.config.security.domainWhiteList
+        return domainWhiteList.indexOf(ctx.request.headers.origin) != -1
+      }
+      // ignoreJSON: true
     },
-    domainWhiteList: ['http://localhost:8080','http://localhost:8000'], //配置白名单
+    // credentials:true,
+    domainWhiteList: ['http://localhost:8000','http://localhost:8080','http://192.168.0.192:8080','http://192.168.0.192:8000']
   };
 
-  config.cors = {
-    
-    origin: '*', //允许所有跨域访问，注释掉则允许上面 白名单 访问
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
-    credentials: true,
-  };
 
 
   return {

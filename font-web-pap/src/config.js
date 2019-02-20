@@ -3,7 +3,7 @@ import cookies from '@/util/cookie'
 const mid = localStorage.getItem('mid') || cookies.getItem('mid')
 const is_test = false
 // const config = require('../config')
-const testApi = is_test ? 'http://api.xzysoft.net': 'http://127.0.0.1:7001'
+const testApi = is_test ? 'http://api.xzysoft.net': 'http://192.168.0.192:7001'
 // aliyun resource
 var fileHost = 'http://xzysaas.oss-cn-shenzhen.aliyuncs.com'
 export default {

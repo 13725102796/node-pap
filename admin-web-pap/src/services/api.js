@@ -1,6 +1,6 @@
 import { stringify } from 'qs';
 import request from '@/utils/request';
-const fontUrl = 'http://127.0.0.1:7001/admin'
+const fontUrl = 'http://192.168.0.192:7001/admin'
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }

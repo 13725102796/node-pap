@@ -17,6 +17,10 @@ export default {
   },
   async created(){
     const data = await API.getBackTitle({id: 1})
+
+    API.login({
+      id: '11111'
+    })
     // API.bingIc({})
     console.log(data)
   }
