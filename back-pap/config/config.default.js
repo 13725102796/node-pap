@@ -16,6 +16,41 @@ module.exports = appInfo => {
     gzip: {
       threshold: 1024, // 小于 1k 的响应体不压缩
     },
+    mysql: {
+      // 单数据库信息配置
+      clients: {
+        // clientId, 获取client实例，需要通过 app.mysql.get('clientId') 获取
+        db1: {
+          // 用户名
+          user: 'root',
+          // 密码
+          password: '188208',
+          // 数据库名
+          database: 'admin-pap',
+        },
+        db2: {
+          // 用户名
+          user: 'root',
+          // 密码
+          password: '188208',
+          // 数据库名
+          database: 'web-pap',
+        },
+        // ...
+      },
+      // 所有数据库配置的默认值
+      default: {
+        // host
+        host: 'localhost',
+        // 端口号
+        port: '3306',
+      },
+    
+      // 是否加载到 app 上，默认开启
+      app: true,
+      // 是否加载到 agent 上，默认关闭
+      agent: false,
+    },
   };
 
   // use for cookie sign key, should change to your own and keep security
@@ -49,7 +84,6 @@ module.exports = appInfo => {
     // credentials:true,
     domainWhiteList: ['http://localhost:8000','http://localhost:8080','http://192.168.0.192:8080','http://192.168.0.192:8000']
   };
-
 
 
   return {
