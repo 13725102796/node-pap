@@ -7,10 +7,6 @@ class LoginService extends Service {
     const client1 = this.app.mysql.get('db1');
     // console.log(client1)
     const user = await client1.get('user', {username: option.userName})
-    // check pwd
-    if(user && user.length > 0) {
-      
-    }
 
     return {user}
 

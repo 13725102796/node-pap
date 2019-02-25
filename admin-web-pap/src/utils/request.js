@@ -1,8 +1,12 @@
 import fetch from 'dva/fetch';
-import { notification } from 'antd';
+import {
+  notification
+} from 'antd';
 import router from 'umi/router';
 import hash from 'hash.js';
-import { isAntdPro } from './utils';
+import {
+  isAntdPro
+} from './utils';
 import cookie from './cookie'
 
 const codeMessage = {
@@ -24,12 +28,15 @@ const codeMessage = {
 };
 
 const checkStatus = response => {
+  console.log(response)
   if (response.status >= 200 && response.status < 300) {
+    // 判断响应码是否正确
+    // if(response)
     return response;
   }
-  const errortext = codeMessage[response.status] || response.statusText;
+  const errortext = response.statusText || codeMessage[response.status];
   notification.error({
-    message: `请求错误 ${response.status}: ${response.url}`,
+    message: `请求错误 ${response.status}`,
     description: errortext,
   });
   const error = new Error(errortext);
@@ -64,8 +71,8 @@ const cachedSave = (response, hashcode) => {
  * @param  {object} [option] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default function request(url, option) {
-  console.log(cookie.getItem('monitor_count'),2131321321)
+export default async function request(url, option) {
+  // console.log(cookie.getItem('monitor_count'),2131321321)
   const options = {
     expirys: isAntdPro(),
     ...option,
@@ -80,12 +87,16 @@ export default function request(url, option) {
     .sha256()
     .update(fingerprint)
     .digest('hex');
-  
+
   const defaultOptions = {
     credentials: 'include',
-    headers: {'x-csrf-token': cookie.getItem('csrfToken') || ''},
+    headers: {
+      'x-csrf-token': cookie.getItem('csrfToken') || ''
+    },
   };
-  const newOptions = { ...defaultOptions, ...options };
+  const newOptions = { ...defaultOptions,
+    ...options
+  };
   if (
     newOptions.method === 'POST' ||
     newOptions.method === 'PUT' ||
@@ -122,19 +133,44 @@ export default function request(url, option) {
       sessionStorage.removeItem(`${hashcode}:timestamp`);
     }
   }
-  return fetch(url, newOptions)
+
+ return fetch(url, newOptions)
     .then(checkStatus)
     .then(response => cachedSave(response, hashcode))
     .then(response => {
+      // console.log(response)
+      // console.log(response.json())
       // DELETE and 204 do not return data by default
       // using .json will report an error.
       if (newOptions.method === 'DELETE' || response.status === 204) {
         return response.text();
       }
+
+      // console.log(response.json())
       return response.json();
     })
+    .then(res=>{
+      console.log(res)
+      if(res.status !== 'ok' && res.msg  ) {
+        notification.error({
+          message: `响应错误`,
+          description: res.msg,
+        });
+        // const error = new Error(res.msg);
+        // error.name =res.err_code;
+        // error.response = res;
+        // throw error;
+      }
+      return res
+      
+      
+      
+    })
     .catch(e => {
+      // console.log(321132)
       const status = e.name;
+      // console.log(status)
+      // console.log(JSON.parse(e),2131213)
       if (status === 401) {
         // @HACK
         /* eslint-disable no-underscore-dangle */
@@ -154,6 +190,14 @@ export default function request(url, option) {
       }
       if (status >= 404 && status < 422) {
         router.push('/exception/404');
+        return
       }
+      // return e
+
     });
+
+    // console.log(resData)
+    // return resData
+
+
 }

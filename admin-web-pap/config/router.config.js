@@ -20,6 +20,28 @@ export default [
       // dashboard
       { path: '/', redirect: '/dashboard/analysis' },
       {
+        path: '/testPage',
+        name: 'testPage',
+        icon: 'testPage',
+        routes: [
+          {
+            path: '/testPage/test',
+            name: 'testPageIndex',
+            component: './TestPage/test',
+          },
+          // {
+          //   path: '/dashboard/monitor',
+          //   name: 'monitor',
+          //   component: './Dashboard/Monitor',
+          // },
+          // {
+          //   path: '/dashboard/workplace',
+          //   name: 'workplace',
+          //   component: './Dashboard/Workplace',
+          // },
+        ],
+      },
+      {
         path: '/dashboard',
         name: 'dashboard',
         icon: 'dashboard',

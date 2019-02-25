@@ -8,21 +8,23 @@ class LoginController extends Controller {
       ctx
     } = this;
     console.log(ctx.request.body)
-    const user = await ctx.service.login.find(ctx.request.body);
-    let code = 10000
+    const {user}  = await ctx.service.admin.login.find(ctx.request.body);
+    let code = 'ok'
     let msg = '操作成功'
-    if(!user || user.length == 0) {
-      code = 10001 
+    // console.log(user.password)
+
+    if(!user || user.password !== ctx.request.body.password) {
+      code = 'error'
       msg = '用户名或密码出错'
-    } 
+    }
 
     ctx.body = {
-      err_code: code,
+      status: code,
       msg: msg,
+      currentAuthority: 'admin',
+      type: ctx.request.body.type,
       result: user
     }
-    
-    // ctx.status = 200;
   }
 }
 

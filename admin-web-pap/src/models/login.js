@@ -17,12 +17,15 @@ export default {
     *login({ payload }, { call, put }) {
       console.log(payload)
       const response = yield call(fakeAccountLogin, payload);
+      console.log(response)
       yield put({
         type: 'changeLoginStatus',
         payload: response,
       });
+      
       // Login successfully
       if (response.status === 'ok') {
+        console.log(response)
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
