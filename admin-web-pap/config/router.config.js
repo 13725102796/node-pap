@@ -22,11 +22,11 @@ export default [
       {
         path: '/testPage',
         name: 'testPage',
-        icon: 'testPage',
+        icon: 'retweet',
         routes: [
           {
             path: '/testPage/test',
-            name: 'testPageIndex',
+            name: 'test',
             component: './TestPage/test',
           },
           // {

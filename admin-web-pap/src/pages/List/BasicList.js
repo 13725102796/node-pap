@@ -122,6 +122,7 @@ class BasicList extends PureComponent {
     const { visible, done, current = {} } = this.state;
 
     const editAndDelete = (key, currentItem) => {
+      console.log(currentItem)
       if (key === 'edit') this.showEditModal(currentItem);
       else if (key === 'delete') {
         Modal.confirm({

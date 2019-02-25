@@ -1,5 +1,7 @@
 export default {
   'menu.home': 'Home',
+  'menu.testPage': 'Test',
+  'menu.testPage.test': 'Test List',
   'menu.dashboard': 'Dashboard',
   'menu.dashboard.analysis': 'Analysis',
   'menu.dashboard.monitor': 'Monitor',
