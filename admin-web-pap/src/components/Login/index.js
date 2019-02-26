@@ -77,7 +77,7 @@ class Login extends Component {
     const { form, onSubmit } = this.props;
     const activeFileds = active[type];
     form.validateFields(activeFileds, { force: true }, (err, values) => {
-      if(!err) onSubmit(values);
+      onSubmit(err,values);
       
     });
   };

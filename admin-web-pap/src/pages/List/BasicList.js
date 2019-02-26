@@ -326,7 +326,7 @@ class BasicList extends PureComponent {
           title={done ? null : `任务${current.id ? '编辑' : '添加'}`}
           className={styles.standardListForm}
           width={640}
-          bodyStyle={done ? { padding: '72px 0' } : { padding: '28px 0 0' }}
+          bodyStyle={done ? { padding: '72px 0' } : { padding: '28px 28px 0' }}
           destroyOnClose
           visible={visible}
           {...modalFooter}

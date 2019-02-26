@@ -81,6 +81,8 @@
   }
 }
 
+
+
 @media screen and (max-width: @screen-lg) {
   .contentLink {
     a {
@@ -108,6 +110,18 @@
     }
     img {
       margin-right: 4px;
+    }
+  }
+}
+
+.standardListForm {
+  :global {
+    .ant-form-item {
+      margin-bottom: 12px;
+      &:last-child {
+        margin-bottom: 32px;
+        padding-top: 4px;
+      }
     }
   }
 }

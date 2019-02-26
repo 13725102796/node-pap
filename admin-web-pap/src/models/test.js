@@ -5,6 +5,7 @@ export default {
 
   state: {
     list: [],
+    // test: [],
   },
 
   effects: {
@@ -39,6 +40,8 @@ export default {
 
   reducers: {
     queryList(state, action) {
+      console.log(state)
+      console.log(action)
       return {
         ...state,
         list: action.payload,

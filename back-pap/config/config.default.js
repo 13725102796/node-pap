@@ -61,6 +61,7 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
+    // db1: 
   };
   //跨域配置
   config.cors = {
@@ -74,12 +75,12 @@ module.exports = appInfo => {
       // useSession: true, // 默认为 false，当设置为 true 时，将会把 csrf token 保存到 Session 中
       // cookieName: 'csrfToken', // Cookie 中的字段名，默认为 csrfToken
       // sessionName: 'csrfToken', // Session 中的字段名，默认为 csrfToken
-      // enable: false,
+      enable: false,
       ignore:ctx=>{
         const domainWhiteList = ctx.app.config.security.domainWhiteList
         return domainWhiteList.indexOf(ctx.request.headers.origin) != -1
-      }
-      // ignoreJSON: true
+      },
+      ignoreJSON: true
     },
     // credentials:true,
     domainWhiteList: ['http://localhost:8000','http://localhost:8080','http://192.168.0.192:8080','http://192.168.0.192:8000','http://127.0.0.1:8000']

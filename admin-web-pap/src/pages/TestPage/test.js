@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { findDOMNode } from 'react-dom';
 import { Card, Button, Icon, List, Modal, Form, Input } from 'antd';
 
 import Ellipsis from '@/components/Ellipsis';
@@ -14,6 +15,11 @@ const FormItem = Form.Item;
 @Form.create()
 class CardList extends PureComponent {
   state = { visible: false, done: false };
+
+  formLayout = {
+    labelCol: { span: 7 },
+    wrapperCol: { span: 13 },
+  };
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -23,12 +29,18 @@ class CardList extends PureComponent {
       },
     });
   }
-  showEditModal(item){
+  showEditModal = (item)=>{
     this.setState({
       visible: true,
       current: item,
     });
   }
+  // showAddModal=()=>{
+  //   this.setState({
+  //     visible: true,
+  //     current: undefined,
+  //   });
+  // }
   deleteItem = id => {
     const { dispatch } = this.props;
     dispatch({
@@ -36,7 +48,36 @@ class CardList extends PureComponent {
       payload: { id },
     });
   }
-  handleSubmit(){}
+  handleSubmit = (e)=>{
+    e.preventDefault();
+    const { dispatch, form } = this.props;
+    const { current } = this.state;
+    const id = current ? current.id : '';
+    // setTimeout(() => this.addBtn.blur(), 0);
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
+      this.setState({
+        done: true,
+      });
+      dispatch({
+        type: 'list/submit',
+        payload: { id, ...fieldsValue },
+      });
+    });
+  }
+  handleCancel = ()=>{
+    // setTimeout(() => this.addBtn.blur(), 0);
+    this.setState({
+      visible: false,
+    });
+  }
+  deleteItem = id => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'list/submit',
+      payload: { id },
+    });
+  };
   
 
   render() {
@@ -56,10 +97,10 @@ class CardList extends PureComponent {
     };
     const editAndDelete = (key, currentItem) => {
       if (key === 'edit') this.showEditModal(currentItem);
-      else if (key === 'delete') {
+      else if (key === 'del') {
         Modal.confirm({
-          title: '删除任务',
-          content: '确定删除该任务吗？',
+          title: '删除操作',
+          content: '确定删除吗？',
           okText: '确认',
           cancelText: '取消',
           onOk: () => this.deleteItem(currentItem.id),
@@ -70,21 +111,6 @@ class CardList extends PureComponent {
     
    
     const getModalContent = () => {
-      if (done) {
-        return (
-          <Result
-            type="success"
-            title="操作成功"
-            description="一系列的信息描述，很短同样也可以带标点。"
-            actions={
-              <Button type="primary" onClick={this.handleDone}>
-                知道了
-              </Button>
-            }
-            className={styles.formResult}
-          />
-        );
-      }
       return (
         <Form onSubmit={this.handleSubmit}>
           <FormItem label="任务名称" {...this.formLayout}>
@@ -127,9 +153,7 @@ class CardList extends PureComponent {
       );
     };
 
-    const modalFooter = done
-      ? { footer: null, onCancel: this.handleDone }
-      : { okText: '保存', onOk: this.handleSubmit, onCancel: this.handleCancel };
+    const modalFooter = { okText: '保存', onOk: this.handleSubmit, onCancel: this.handleCancel };
 
     return (
       <PageHeaderWrapper >
@@ -145,10 +169,10 @@ class CardList extends PureComponent {
                 <List.Item key={item.id}>
                   <Card hoverable className={styles.card} actions={[<a onClick={e => {
                         e.preventDefault();
-                        this.showEditModal('edit',item);
+                        editAndDelete('edit',item);
                       }}>编辑</a>, <a onClick={e => {
                         e.preventDefault();
-                        this.showEditModal('del',item);
+                        editAndDelete('del',item);
                       }}>删除</a>]}>
                     <Card.Meta
                       avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
@@ -163,7 +187,14 @@ class CardList extends PureComponent {
                 </List.Item>
               ) : (
                 <List.Item>
-                  <Button type="dashed" className={styles.newButton}>
+                  <Button type="dashed" 
+                    onClick={this.showEditModal}
+                    ref={component => {
+                      /* eslint-disable */
+                      this.addBtn = findDOMNode(component);
+                      /* eslint-enable */
+                    }}
+                    className={styles.newButton}>
                     <Icon type="plus" /> 新建产品
                   </Button>
                 </List.Item>
@@ -172,10 +203,10 @@ class CardList extends PureComponent {
           />
         </div>
         <Modal
-          title={done ? null : `任务${current.id ? '编辑' : '添加'}`}
+          title={`任务${current.id ? '编辑' : '添加'}`}
           className={styles.standardListForm}
           width={640}
-          bodyStyle={done ? { padding: '72px 0' } : { padding: '28px 0 0' }}
+          bodyStyle={{ padding: '28px 0 0' }}
           destroyOnClose
           visible={visible}
           {...modalFooter}
