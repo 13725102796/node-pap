@@ -1,6 +1,32 @@
-import { stringify } from 'qs';
+import {
+  stringify
+} from 'qs';
 import request from '@/utils/request';
 const fontUrl = 'http://192.168.0.192:7001/admin'
+
+export async function testApi(act, params) {
+  if (act === 'index') return request(`${fontUrl}/api/test?${stringify(params.query)}`)
+  if (act === 'show') return request(`${fontUrl}/api/test/${params.id}`)
+  if (act === 'create') {
+    return request(`${fontUrl}/api/test`, {
+      method: 'POST',
+      body: params,
+    })
+  }
+  if (act === 'update') {
+    return request(`${fontUrl}/api/test/${params.id}`, {
+      method: 'PUT',
+      body: params,
+    })
+  }
+  if(act === 'del'){
+    return request(`${fontUrl}/api/test/${params.id}`, {
+      method: 'DELETE',
+      // body: params,
+    })
+  }
+}
+
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
@@ -71,7 +97,9 @@ export async function queryFakeList(params) {
 }
 
 export async function removeFakeList(params) {
-  const { count = 5, ...restParams } = params;
+  const {
+    count = 5, ...restParams
+  } = params;
   return request(`/api/fake_list?count=${count}`, {
     method: 'POST',
     body: {
@@ -82,7 +110,9 @@ export async function removeFakeList(params) {
 }
 
 export async function addFakeList(params) {
-  const { count = 5, ...restParams } = params;
+  const {
+    count = 5, ...restParams
+  } = params;
   return request(`/api/fake_list?count=${count}`, {
     method: 'POST',
     body: {
@@ -93,7 +123,9 @@ export async function addFakeList(params) {
 }
 
 export async function updateFakeList(params) {
-  const { count = 5, ...restParams } = params;
+  const {
+    count = 5, ...restParams
+  } = params;
   return request(`/api/fake_list?count=${count}`, {
     method: 'POST',
     body: {
@@ -104,7 +136,7 @@ export async function updateFakeList(params) {
 }
 
 export async function fakeAccountLogin(params) {
-  return request( fontUrl + '/api/login/account', {
+  return request(fontUrl + '/api/login/account', {
     method: 'POST',
     body: params,
   });

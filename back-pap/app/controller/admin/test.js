@@ -10,13 +10,14 @@ class TestController extends Controller {
     } = this;
     const option = ctx.request.body
     // console.log(ctx.request.body)
-    const { list }  = await ctx.service.admin.test.index(option);
+    const { list,totalPage }  = await ctx.service.admin.test.index(option);
 
     ctx.body = {
       status: 'ok',
       result: list,
       limit: option.limit || 10,
-      offset: option.offset || 0
+      offset: option.offset || 0,
+      totalPage: totalPage
     }
   }
   async show(){

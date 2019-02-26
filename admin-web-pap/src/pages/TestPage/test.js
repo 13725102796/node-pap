@@ -175,11 +175,11 @@ class CardList extends PureComponent {
                         editAndDelete('del',item);
                       }}>删除</a>]}>
                     <Card.Meta
-                      avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
+                      avatar={<img alt="" className={styles.cardAvatar} src={item.img} />}
                       title={<a>{item.title}</a>}
                       description={
                         <Ellipsis className={styles.item} lines={3}>
-                          {item.description}
+                          {item.desc}
                         </Ellipsis>
                       }
                     />
