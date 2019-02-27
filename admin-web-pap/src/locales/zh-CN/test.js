@@ -1,3 +1,15 @@
-// export default {
-//   'app.testPage.test':''
-// }
+export default {
+  'test.add-product':'新建产品',
+  'test.edit': '编辑',
+  'test.del': '删除',
+  'test.submit': '提交',
+  'test.upload': '上传',
+  'test.save': '保存',
+  'test.cancel': '取消',
+  'test.name.label': '名称',
+  'test.img.label': '头像',
+  'test.desc.label': '描述',
+  'test.name.placeholder': '请输入您的名字',
+  'test.img.placeholder': '请上传您的头像',
+  'test.desc.placeholder': '请输入至少5个字符',
+}

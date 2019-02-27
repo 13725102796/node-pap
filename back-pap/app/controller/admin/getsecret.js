@@ -28,7 +28,8 @@ class GetsecretController extends Controller {
     const {
       ctx
     } = this;
-    // console.log(ctx.request.body, 21321321)
+    console.log(ctx.query)
+    if(ctx.query.expirys) config.durationSeconds = ctx.query.expirys
     // TODO 这里根据自己业务需要做好放行判断
     // if (config.allowPrefix !== '_ALLOW_DIR_/*') {
     //   ctx.body = {

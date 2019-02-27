@@ -117,7 +117,7 @@ export default async function request(url, option) {
       };
     }
   }
-
+  console.log(options,'asdfasdf')
   const expirys = options.expirys && 60;
   // options.expirys !== false, return the cache,
   if (options.expirys !== false) {

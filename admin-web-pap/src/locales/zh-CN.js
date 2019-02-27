@@ -10,7 +10,7 @@ import settingDrawer from './zh-CN/settingDrawer';
 import settings from './zh-CN/settings';
 import pwa from './zh-CN/pwa';
 import component from './zh-CN/component';
-
+import test from './zh-CN/test';
 export default {
   'navBar.lang': '语言',
   'layout.user.link.help': '帮助',
@@ -32,4 +32,5 @@ export default {
   ...settings,
   ...pwa,
   ...component,
+  ...test,
 };

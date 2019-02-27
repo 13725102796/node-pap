@@ -188,6 +188,7 @@ export const importCDN = (url, name) =>
     dom.src = url;
     dom.type = 'text/javascript';
     dom.onload = () => {
+      console.log('加载成功')
       resolve(window[name]);
     };
     document.head.appendChild(dom);

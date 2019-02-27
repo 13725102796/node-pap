@@ -2,10 +2,12 @@ import {
   stringify
 } from 'qs';
 import request from '@/utils/request';
-const fontUrl = 'http://192.168.0.192:7001/admin'
+const fontUrl = 'http://127.0.0.1:7001/admin'
 
 export async function testApi(act, params) {
-  if (act === 'index') return request(`${fontUrl}/api/test?${stringify(params.query)}`)
+  // console.log(params)
+  // console.log(stringify(params))
+  if (act === 'index') return request(`${fontUrl}/api/test?${stringify(params)}`)
   if (act === 'show') return request(`${fontUrl}/api/test/${params.id}`)
   if (act === 'create') {
     return request(`${fontUrl}/api/test`, {
@@ -25,6 +27,11 @@ export async function testApi(act, params) {
       // body: params,
     })
   }
+}
+
+export async function getSerceKey(params){
+  // 先看看有没有session存在
+  return request(`${fontUrl}/api/getSecret?${stringify(params)}`,{expirys: params.expirys || ''})
 }
 
 export async function queryProjectNotice() {

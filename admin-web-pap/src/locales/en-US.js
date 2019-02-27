@@ -10,7 +10,7 @@ import settingDrawer from './en-US/settingDrawer';
 import settings from './en-US/settings';
 import pwa from './en-US/pwa';
 import component from './en-US/component';
-
+import test from './en-US/test';
 export default {
   'navBar.lang': 'Languages',
   'layout.user.link.help': 'Help',
@@ -32,4 +32,5 @@ export default {
   ...settings,
   ...pwa,
   ...component,
+  ...test,
 };
