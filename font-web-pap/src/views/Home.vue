@@ -16,9 +16,9 @@ export default {
     HelloWorld
   },
   async created(){
-    const data = await API.getBackTitle({id: 1})
+    // const data = await API.getBackTitle({id: 1})
     // API.bingIc({})
-    console.log(data)
+    // console.log(data)
   }
 }
 </script>

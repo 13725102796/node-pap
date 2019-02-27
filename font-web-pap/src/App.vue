@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <mdc-button unelevated><router-link to="/">Home</router-link> </mdc-button>|
+      <mdc-button unelevated><router-link to="/about">About</router-link></mdc-button>
     </div>
     <router-view/>
   </div>

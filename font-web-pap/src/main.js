@@ -3,9 +3,16 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+//css
+import '@/assets/theme.scss' 
+
+// ui
+import VueMDCAdapter from 'vue-mdc-adapter'
+Vue.use(VueMDCAdapter)
+
 Vue.config.productionTip = false
 
-new Vue({
+export default new Vue({
   router,
   store,
   render: h => h(App),

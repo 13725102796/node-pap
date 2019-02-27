@@ -26,6 +26,13 @@ module.exports = {
       ],
     };
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        includePaths: [path.resolve(__dirname,'node_modules')],
+      },
+    },
+  },
   // 配置代理
   // devServer: {
   //   // 设置主机地址
