@@ -23,13 +23,13 @@ export async function upload(file) {
   // 请求用到的参数
   var Bucket = 'zyc-1258676507';
   var Region = 'ap-guangzhou';
-  // var protocol = location.protocol === 'https:' ? 'https:' : 'http:';
-  var prefix = 'https:' + '//' + Bucket + '.cos.' + Region + '.myqcloud.com/';
+  var protocol = location.protocol === 'https:' ? 'https:' : 'http:';
+  var prefix = protocol + '//' + Bucket + '.cos.' + Region + '.myqcloud.com/';
   const form = new FormData()
   const randomArr = Math.floor(Math.random() * 10000)
   const fileName = randomArr + new Date().getTime() + file.name
   // form.append('key', fileName)
-  form.append('key', 'admin-pap/img/' + fileName)
+  form.append('key', '/' + fileName)
   form.append('success_action_status', 200)
   
   // form.append('success_action_redirect', 'http://localhost:8000/testPage/test')
@@ -37,18 +37,10 @@ export async function upload(file) {
   form.append('Signature', AuthData.Authorization)
   form.append('x-cos-security-token', AuthData.XCosSecurityToken || '')
   form.append('file', file.originFileObj)
-  // form.append('signature', signatureData.signature)
-  
-  // form.action = prefix
-  // form.submit()
-  // var request = new XMLHttpRequest();
-  // request.open("POST", "http://foo.com/submitform.php");
-  // request.send(formData);
-
 
   var xhr = new XMLHttpRequest();
   xhr.open('POST', prefix);
-  xhr.setRequestHeader("Content-Type", "multipart/form-data");
+  // xhr.setRequestHeader("Content-Type", "multipart/form-data");
   xhr.onload = function () {
     if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
       console.log(xhr.responseText);

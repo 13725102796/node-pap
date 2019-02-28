@@ -8,5 +8,5 @@ module.exports = app => {
 
 
   // restful 规范 crud
-  router.resources('test', '/admin/api/test', gzip, controller.admin.test)
+  router.resources('test', '/admin/api/test', controller.admin.test)
 };

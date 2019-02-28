@@ -41,7 +41,8 @@ class TestController extends Controller {
     let msg = bool ? '操作成功' : '操作失败'
     ctx.body = {
       status: status,
-      msg: msg
+      msg: msg,
+      result: bool
     }
   }
   async update(){

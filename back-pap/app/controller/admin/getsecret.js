@@ -1,14 +1,15 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const STS = require('qcloud-cos-sts');
 var config = {
-  secretId: 'AKIDgQPgiWodMp33wZQyb5IYhKiqCJFDdAmp',
-  secretKey: 'ycy8L1RM8e06TaSMXP7ZsG3X1tslTgjg',
+  secretId: 'AKIDzRefaYsGAMO9fyyKFEOcZe9fx08PhKuj',
+  secretKey: '1SiceU3OJ0eAG6SVJkCgvvjT8XdtHxGe',
   proxy: '',
   durationSeconds: 1800,
   bucket: 'zyc-1258676507',
   region: 'ap-guangzhou',
-  allowPrefix: '_ALLOW_DIR_/*',
+  allowPrefix: '*',
   // 密钥的权限列表
   allowActions: [
     // 所有 action 请看文档 https://cloud.tencent.com/document/product/436/31923
@@ -22,7 +23,7 @@ var config = {
     'name/cos:CompleteMultipartUpload'
   ],
 };
-const STS = require('qcloud-cos-sts');
+
 class GetsecretController extends Controller {
   async index() {
     const {
@@ -31,7 +32,7 @@ class GetsecretController extends Controller {
     console.log(ctx.query)
     if(ctx.query.expirys) config.durationSeconds = ctx.query.expirys
     // TODO 这里根据自己业务需要做好放行判断
-    // if (config.allowPrefix !== '_ALLOW_DIR_/*') {
+    // if (config.allowPrefix !== 'admin-pap/*') {
     //   ctx.body = {
     //     error: '请修改 allowPrefix 配置项，指定允许上传的路径前缀'
     //   };
@@ -64,6 +65,7 @@ class GetsecretController extends Controller {
         ],
       }],
     };
+    console.log('qcs::cos:ap-guangzhou:uid/' + AppId + ':prefix//' + AppId + '/' + ShortBucketName + '/' + config.allowPrefix,)
     var startTime = Math.round(Date.now() / 1000);
     return new Promise((resolve,reject)=>{
       try{

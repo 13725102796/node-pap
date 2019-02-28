@@ -37,6 +37,7 @@
     "bizcharts": "^3.4.3",
     "bizcharts-plugin-slider": "^2.1.1-beta.1",
     "classnames": "^2.2.6",
+    "cos-js-sdk-v5": "^0.5.8",
     "dva": "^2.4.1",
     "enquire-js": "^0.2.1",
     "hash.js": "^1.1.7",

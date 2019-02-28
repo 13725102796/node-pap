@@ -2,10 +2,6 @@ const Service = require('egg').Service;
 
 const dbName = 'testlist'
 class LoginService extends Service {
-  // constructor(){
-  //   super()
-  //   console.log(this)
-  // }
   client1(){ return this.app.mysql.get('db1')}
   // SELECT SQL_CALC_FOUND_ROWS goods WHERE k='avs' LIMIT 10; 
   // SELECT FOUND_ROWS();
@@ -33,7 +29,7 @@ class LoginService extends Service {
     const insertSuccess = result.affectedRows === 1
     // console.log(result)
     // console.log(insertSuccess)
-    return insertSuccess
+    return insertSuccess ? result.insertId : false
   }
 
   async update(option){

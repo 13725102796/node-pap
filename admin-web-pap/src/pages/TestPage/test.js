@@ -6,6 +6,8 @@ import { Card, Button, Icon, List, Modal, Form, Input, Upload, message  } from '
 import Ellipsis from '@/components/Ellipsis';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { formatMessage, FormattedMessage } from 'umi/locale';
+
+import { upload } from '@/utils/img1'
 import styles from './test.less';
 
 
@@ -84,14 +86,19 @@ class CardList extends PureComponent {
     // setTimeout(() => this.addBtn.blur(), 0);
     form.validateFields((err, fieldsValue) => {
       if (err) return;
-      this.setState({
-        done: true,
-      });
-      console.log(fieldsValue)
+      // const that = this 
+      console.log(fieldsValue) 
+      // fieldsValue.img = this.state.imageUrl
       dispatch({
         type: 'test/submit',
         payload: { id, ...fieldsValue },
-      });
+        callback: () => {
+          this.setState({
+            visible: false,
+          });
+        },  
+      })
+      
     });
   }
   handleCancel = ()=>{
@@ -126,14 +133,16 @@ class CardList extends PureComponent {
     reader.readAsDataURL(val.file)
     const that = this
     reader.onload=function(){
-  //     console.log(this.result);
       that.setState({
         imageUrl: this.result
       })
-
-      // console.log(that.state.current)
     }
-    return true
+    // upload(val.file).then((res)=>{
+    //   this.setState({
+    //     imageUrl: res
+    //   })
+    // })
+    // return true
   }
 
   render() {
@@ -221,10 +230,10 @@ class CardList extends PureComponent {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="//jsonplaceholder.typicode.com/posts/"
+            
                 beforeUpload={beforeUpload}
                 customRequest={this.saveImage}
-                onChange={this.handleChange}
+                /* onChange={this.handleChange} */
               >
                 {imageUrl ? <div className="ant-upload"><img src={imageUrl} alt="avatar"   /></div> : uploadButton}
               </Upload>

@@ -83,7 +83,7 @@ module.exports = appInfo => {
       ignoreJSON: true
     },
     // credentials:true,
-    domainWhiteList: ['http://localhost:8000','http://localhost:8080','http://192.168.0.192:8080','http://192.168.0.192:8000','http://127.0.0.1:8000','http://127.0.0.1:3000']
+    domainWhiteList: ['http://localhost:8000','http://localhost:8080','http://192.168.0.192:3000','http://192.168.0.192:8000','http://127.0.0.1:8000','http://127.0.0.1:3000']
   };
 
 

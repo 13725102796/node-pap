@@ -1,5 +1,5 @@
 import {testApi, getSerceKey, queryFakeList, removeFakeList, addFakeList, updateFakeList } from '@/services/api';
-import { upload } from '@/utils/imgUpload'
+import { upload } from '@/utils/img1'
 export default {
   namespace: 'test',
 
@@ -29,26 +29,29 @@ export default {
         payload: Array.isArray(response) ? response : [],
       });
     },
-    *submit({ payload }, { call, put }) {
-      let callback;
+    *submit({ payload,callback }, { call, put }) {
+      let actName;
 
       if (payload.id) {
-        callback = Object.keys(payload).length === 1 ? 'del' : 'update';
+        actName = Object.keys(payload).length === 1 ? 'del' : 'update';
       } else {
-        callback = 'create';
+        actName = 'create';
       }
-      if(callback === 'create' || (callback === 'updata' && payload.img.indexOf('https://') === -1 )) {
+      if(actName === 'create' || (actName === 'updata' && payload.img.indexOf('https://') === -1 )) {
         // 需要上传图片
         if(payload.img.file){
-          const keyData = yield call(upload, payload.img.file)
-          console.log(keyData)
+          const keyData = yield call(upload, payload.img.file.originFileObj)
+          payload.img = keyData
+          console.log(payload)
         }
       } 
-      // const response = yield call(testApi, callback, payload); // post
-      // yield put({
-      //   type: 'queryList',
-      //   payload: response,
-      // });
+      const {result} = yield call(testApi, actName, payload); 
+      payload.id = result
+      yield put({
+        type: 'appendList',
+        payload: [payload],
+      });
+      abort: callback()
     },
   },
 
