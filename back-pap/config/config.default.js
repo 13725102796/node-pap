@@ -24,7 +24,7 @@ module.exports = appInfo => {
           // 用户名
           user: 'root',
           // 密码
-          password: '188208',
+          password: 'zyc188208-',
           // 数据库名
           database: 'admin-pap',
         },
@@ -32,7 +32,7 @@ module.exports = appInfo => {
           // 用户名
           user: 'root',
           // 密码
-          password: '188208',
+          password: 'zyc188208-',
           // 数据库名
           database: 'web-pap',
         },
@@ -41,7 +41,7 @@ module.exports = appInfo => {
       // 所有数据库配置的默认值
       default: {
         // host
-        host: 'localhost',
+        host: '129.204.194.110',
         // 端口号
         port: '3306',
       },

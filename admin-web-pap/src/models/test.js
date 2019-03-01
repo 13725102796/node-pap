@@ -1,17 +1,11 @@
 import {testApi, getSerceKey, queryFakeList, removeFakeList, addFakeList, updateFakeList } from '@/services/api';
-import { upload } from '@/utils/img1'
+import { upload, delFile } from '@/utils/img1'
 export default {
   namespace: 'test',
 
   state: {
     list: [],
     totalPage: null,
-    // page: {
-    //   limit: null,
-    //   offect: null, 
-    //   totalPage: null,
-    // }
-    // test: [],
   },
 
   effects: {
@@ -30,14 +24,10 @@ export default {
       });
     },
     *submit({ payload,callback }, { call, put }) {
-      let actName;
+      let actName = payload.action;
+      payload = payload.item
 
-      if (payload.id) {
-        actName = Object.keys(payload).length === 1 ? 'del' : 'update';
-      } else {
-        actName = 'create';
-      }
-      if(actName === 'create' || (actName === 'updata' && payload.img.indexOf('https://') === -1 )) {
+      if(actName === 'create' || (actName === 'update' && payload.img.file)) {
         // 需要上传图片
         if(payload.img.file){
           const keyData = yield call(upload, payload.img.file.originFileObj)
@@ -45,13 +35,29 @@ export default {
           console.log(payload)
         }
       } 
-      const {result} = yield call(testApi, actName, payload); 
-      payload.id = result
-      yield put({
-        type: 'appendList',
-        payload: [payload],
-      });
-      abort: callback()
+      const data = yield call(testApi, actName, payload); 
+      if(data.result) {
+        payload.id = data.result
+        yield put({
+          type: 'appendList',
+          payload: [payload],
+        });
+      } else {
+        if(actName === 'update') {
+          yield put({
+            type: 'updateList',
+            payload: payload,
+          });
+        }else if(actName === 'del') {
+          // yield call(delFile, payload.img )
+          yield put({
+            type: 'delList',
+            payload: payload,
+          });
+        }
+      }
+      
+      callback()
     },
   },
 
@@ -60,7 +66,7 @@ export default {
       console.log(state)
       console.log(action)
       return {
-        // ...state,
+        ...state,
         list: action.payload.result,
         totalPage: action.payload.totalPage
       };
@@ -68,8 +74,39 @@ export default {
     appendList(state, action) {
       return {
         ...state,
-        list: state.list.concat(action.payload),
+        list: [].concat(action.payload,state.list),
       };
     },
+    updateList(state,action){ 
+      const index = state.list.findIndex(item =>{
+        if(item.id === action.payload.id ) {
+          if(item.img != action.payload.img) delFile(item.img)
+          
+          return action.payload
+        } 
+      })
+      const arr = state.list
+      arr[index] = action.payload
+      return {
+        ...state,
+        list: arr
+      };
+    },
+    delList(state,action){
+      const index = state.list.findIndex(item =>{
+        if(item.id === action.payload.id ) {
+          delFile(item.img)
+          return action.payload
+        } 
+      })
+      console.log(index)
+      state.list.splice(index,1)
+      // console.log(arr)
+      // arr[index] = action.payload
+      return {
+        ...state,
+        list: state.list
+      };
+    }
   },
 };

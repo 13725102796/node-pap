@@ -8,8 +8,8 @@ class TestController extends Controller {
     const {
       ctx
     } = this;
-    const option = ctx.request.body
-    // console.log(ctx.request.body)
+    const option = ctx.query
+    // console.log(ctx.query)
     const { list,totalPage }  = await ctx.service.admin.test.index(option);
 
     ctx.body = {

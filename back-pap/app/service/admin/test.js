@@ -6,11 +6,14 @@ class LoginService extends Service {
   // SELECT SQL_CALC_FOUND_ROWS goods WHERE k='avs' LIMIT 10; 
   // SELECT FOUND_ROWS();
   async index(option) {
+    // console.log(option)
+    const limit =  Number(option.limit-1) || ''
+    const offset = Number(option.offset*limit) || '' 
     const list = await this.client1().select(dbName, {
       where: option.select || { },
-      orders: [['created_at','desc'], ['id','desc']],
-      limit: option.limit || 10,
-      offset: option.offset || 0
+      orders: [['id','desc']],
+      limit: limit,
+      offset: offset
     })
     // SELECT count(*) FROM (SELECT COUNT(*) FROM `${dbName}` WHERE `c_time`>=1474560000 and `c_time`<1476201600 group by `record_type`) 
     const totalPage = await this.getTotal(option)
@@ -42,6 +45,7 @@ class LoginService extends Service {
     const result = await this.client1().delete(dbName, {
       id: id
     })
+    
     return result.affectedRows === 1;
   }
 

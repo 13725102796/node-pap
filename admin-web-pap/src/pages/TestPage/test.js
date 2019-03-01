@@ -39,7 +39,7 @@ const { TextArea } = Input;
 }))
 @Form.create()
 class CardList extends PureComponent {
-  state = { visible: false, done: false, limit: 10,offect: 0 ,  loading: false,};
+  state = { visible: false, done: false, limit: 10,offset: 0 ,  loading: false,};
 
   formLayout = {
     labelCol: { span: 7 },
@@ -50,19 +50,22 @@ class CardList extends PureComponent {
   }
   getPageData(){
     const { dispatch } = this.props;
-    const { limit, offect } = this.state;
+    const { limit, offset } = this.state;
     dispatch({
       type: 'test/fetch',
       payload: {
         limit,
-        offect
+        offset
       },
     });
   }
   showEditModal = (item)=>{
+    
+    // item.imageUrl = item.img
     this.setState({
       visible: true,
       current: item,
+      imageUrl: item.img
     });
   }
   // showAddModal=()=>{
@@ -71,11 +74,12 @@ class CardList extends PureComponent {
   //     current: undefined,
   //   });
   // }
-  deleteItem = id => {
+  deleteItem = item => {
     const { dispatch } = this.props;
+    const action = 'del'
     dispatch({
       type: 'test/submit',
-      payload: { id },
+      payload: {action,item},
     });
   }
   handleSubmit = (e)=>{
@@ -83,18 +87,20 @@ class CardList extends PureComponent {
     const { dispatch, form } = this.props;
     const { current } = this.state;
     const id = current ? current.id : '';
+    const action = id ? 'update' : 'create'
     // setTimeout(() => this.addBtn.blur(), 0);
-    form.validateFields((err, fieldsValue) => {
+    form.validateFields((err, item) => {
       if (err) return;
       // const that = this 
-      console.log(fieldsValue) 
-      // fieldsValue.img = this.state.imageUrl
+      console.log(item) 
+      item.id = id
       dispatch({
         type: 'test/submit',
-        payload: { id, ...fieldsValue },
+        payload: {action, item },
         callback: () => {
           this.setState({
             visible: false,
+            imageUrl: null
           });
         },  
       })
@@ -107,13 +113,6 @@ class CardList extends PureComponent {
       visible: false,
     });
   }
-  deleteItem = id => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'list/submit',
-      payload: { id },
-    });
-  };
   handleChange = (info) => {
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
@@ -159,10 +158,15 @@ class CardList extends PureComponent {
       showSizeChanger: true,
       showQuickJumper: true,
       pageSize: limit,
-      total: totalPage || 0,
+      total: totalPage + Math.ceil(totalPage/limit-1) || 0,
       onChange: (page, pageSize)=>{
         // 页码改变
-        console.log(page,pageSize) 
+        this.setState({
+          offset: page-1,
+        },function(){
+          this.getPageData()
+        })
+        // console.log(page,pageSize) 
       },
       onShowSizeChange: (current, size)=>{
         console.log(current, size )
@@ -184,7 +188,7 @@ class CardList extends PureComponent {
           content: '确定删除吗？',
           okText: '确认',
           cancelText: '取消',
-          onOk: () => this.deleteItem(currentItem.id),
+          onOk: () => this.deleteItem(currentItem),
         });
       }
     };
