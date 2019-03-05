@@ -26,6 +26,9 @@ export default {
       // Login successfully
       if (response.status === 'ok') {
         console.log(response)
+        // 添加路由数据
+        const routeData = response.routeData
+        yield put({type: 'menu/setAsyncRoute', routeData})
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();

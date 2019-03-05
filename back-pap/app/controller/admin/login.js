@@ -11,11 +11,27 @@ class LoginController extends Controller {
     const {user}  = await ctx.service.admin.login.find(ctx.request.body);
     let code = 'ok'
     let msg = '操作成功'
+    let routeData = [
+          {
+            path: '/testPage',
+            name: 'testPage',
+            icon: 'retweet',
+            routes: [
+              {
+                path: '/testPage/test',
+                name: 'test',
+                component: './TestPage/test',
+              },
+            ],
+          },
+        ]
+      
     // console.log(user.password)
 
     if(!user || user.password !== ctx.request.body.password) {
       code = 'error'
       msg = '用户名或密码出错'
+      routeData = ''
     }
 
     ctx.body = {
@@ -23,7 +39,8 @@ class LoginController extends Controller {
       msg: msg,
       currentAuthority: 'admin',
       type: ctx.request.body.type,
-      result: user
+      result: user,
+      routeData: routeData
     }
   }
 }

@@ -98,6 +98,7 @@ export default {
   state: {
     menuData: [],
     breadcrumbNameMap: {},
+    asyncRoute: null
   },
 
   effects: {
@@ -119,5 +120,11 @@ export default {
         ...action.payload,
       };
     },
+    setAsyncRoute(state,action){
+      return {
+        ...state,
+        asyncRoute: action.payload
+      }
+    }
   },
 };
