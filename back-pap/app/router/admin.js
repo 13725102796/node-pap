@@ -5,8 +5,11 @@ module.exports = app => {
   
 
   router.get('/admin/api/getSecret', gzip ,controller.admin.getsecret.index)
-
+  
 
   // restful 规范 crud
   router.resources('test', '/admin/api/test', controller.admin.test)
+
+  // 路由控制
+  router.resources('routeControll', '/admin/api/routeControll', gzip ,controller.admin.routeControll.index)
 };

@@ -4,6 +4,14 @@ import {
 import request from '@/utils/request';
 const fontUrl = 'http://127.0.0.1:7001/admin'
 
+export async function routeApi(act,params){
+  if (act === 'update') {
+    return request(`${fontUrl}/api/routeControll/${params.id}`, {
+      method: 'PUT',
+      body: params,
+    })
+  }
+}
 export async function testApi(act, params) {
   // console.log(params)
   // console.log(stringify(params))
