@@ -71,12 +71,13 @@ class BasicLayout extends React.Component {
       type: 'setting/getSetting',
     });
     // 处理路由数据，从后台中加载路由数据
-    const routeData = JSON.parse(localStorage.getItem('routeData'))
+    var routeData = JSON.parse(localStorage.getItem('routeData'))
     const firstEle = routes[0]
     const lasttEle = routes[routes.length-1]
     routeData.push(lasttEle)
     routeData.unshift(firstEle)
-    console.log(routeData)
+    routeData = routes
+    // console.log(routeData)
     dispatch({
       type: 'menu/getMenuData',
       payload: { routeData, authority },

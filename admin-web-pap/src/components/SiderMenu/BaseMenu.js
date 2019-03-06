@@ -144,6 +144,7 @@ export default class BaseMenu extends PureComponent {
       };
     }
     const { handleOpenChange, style, menuData } = this.props;
+    console.log(menuData)
     const cls = classNames(className, {
       'top-nav-menu': mode === 'horizontal',
     });
