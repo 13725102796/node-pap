@@ -65,6 +65,8 @@ const filterMenuData = (menuData,routeData) => {
   if (!menuData) {
     return [];
   }
+  console.warn( typeof menuData)
+  console.warn( typeof routeData);
   return menuData
     .filter(item => item.name && !item.hideInMenu && routeData.indexOf(item.path) > -1 )
     .map(item => check(item.authority, getSubMenu(item,routeData)))
@@ -114,18 +116,8 @@ export default {
   effects: {
     *getMenuData({ payload }, { put }) {
       const { routes, authority } = payload;
-      // const routeData = [
-      //   "/testPage/test",
-      //   "/testPage",
-      //   "/routePage",
-      //   "/routePage/setting",
-      //   "/dashboard/monitor",
-      //   "/list/search/projects"
-      // ]
-      const routeData = JSON.parse(localStorage.getItem('routeData'))
-      console.log(routeData)
-      // 还原路由结构
-      console.log(routes)
+      const routeData = localStorage.getItem('routeData')
+      alert(routeData)
       const menuData = filterMenuData(memoizeOneFormatter(routes, authority),routeData);
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData);
       yield put({
@@ -142,11 +134,5 @@ export default {
         ...action.payload,
       };
     },
-    setAsyncRoute(state,action){
-      return {
-        ...state,
-        asyncRoute: action.payload
-      }
-    }
   },
 };

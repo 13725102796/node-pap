@@ -37,7 +37,7 @@ class RouteController extends Controller {
     const bool  = await ctx.service.admin.routeControll.update(option);
     ctx.body = {
       status: bool ? 'ok' : 'error',
-      msg: bool ? '更新成功' : '更新失败'
+      msg: bool ? '更新成功' : '更新失败',
     }
   }
 

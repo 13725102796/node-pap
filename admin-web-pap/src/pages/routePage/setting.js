@@ -1,38 +1,14 @@
 
 import React, { PureComponent } from 'react';
 import routePage from '../../../config/router.config.js'
-import { Button , Tree, Icon ,Card } from 'antd';
+import { message, Button , Tree, Icon ,Card } from 'antd';
 import { connect } from 'dva';
 import { isUrl } from '@/utils/utils';
 import { formatMessage, FormattedMessage } from 'umi/locale';
-// import styles from './index.less';
-
-// import IconFont from '@/components/IconFont';
-
+import { reloadAuthorized } from '@/utils/Authorized';
 const { TreeNode } = Tree;
 const routeData = routePage[1].routes
-
-
-// const getIcon = icon => {
-//   if (typeof icon === 'string') {
-//     if (isUrl(icon)) {
-//       return <Icon component={() => <img src={icon} alt="icon" className={styles.icon} />} />;
-//     }
-//     if (icon.startsWith('icon-')) {
-//       return <IconFont type={icon} />;
-//     }
-//     return <Icon type={icon} />;
-//   }
-//   return icon;
-// };
-const defaultCheck = [
-  "/testPage/test",
-  "/testPage",
-  "/routePage",
-  "/routePage/setting",
-  "/dashboard/monitor",
-  "/list/search/projects"
-]
+const defaultCheck = eval(JSON.parse(localStorage.getItem('routeData')))
 
 @connect(({ route, loading }) => {
   console.log(route)
@@ -80,24 +56,39 @@ class CardList extends PureComponent {
     }
     return <TreeNode title={formatMessage({ id: 'menu.' + (parent && parent + '.' ) + item.name })} key={item.path}></TreeNode>;
   };
-  // onSelect = (selectedKeys, info) => {
-  //   console.log('selected', selectedKeys, info);
-  // }
   onCheck = (checkedKeys, info) => {
+    this.setState({
+          routeData: checkedKeys
+        })
     console.log('onCheck', checkedKeys, info);
   }
   onSubmit = ()=>{
-    console.log(this.props)
+    // console.log(this.props)
     const { dispatch } = this.props;
+    console.log(this.state.routeData)
+    const newData = JSON.stringify(this.state.routeData)
     dispatch({
       type: 'route/submit',
-      payload: JSON.stringify(this.state.routeData),
+      payload: newData
+    }).then((res)=>{
+      message.success(res.msg);
+      // alert(newData)
+      
+
+      localStorage.setItem('routeData', newData)
+      // reloadAuthorized();
+      location.reload()
+      // 刷新页面
+      
     });
     // console.log(this.state.routeData)
   }
 
   render() {
     const { submitting } = this.props;
+    
+    // console.log(typeof defaultCheck)
+    // console.log(Array.isArray(defaultCheck))
     return (
 
       <Card style={{ width: 600 }}
