@@ -117,7 +117,6 @@ export default {
     *getMenuData({ payload }, { put }) {
       const { routes, authority } = payload;
       const routeData = localStorage.getItem('routeData')
-      alert(routeData)
       const menuData = filterMenuData(memoizeOneFormatter(routes, authority),routeData);
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData);
       yield put({
