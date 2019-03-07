@@ -11,20 +11,6 @@ class LoginController extends Controller {
     const {user}  = await ctx.service.admin.login.find(ctx.request.body);
     let code = 'ok'
     let msg = '操作成功'
-    let routeData = [
-          {
-            path: '/testPage',
-            name: 'testPage',
-            icon: 'retweet',
-            routes: [
-              {
-                path: '/testPage/test',
-                name: 'test',
-                component: './TestPage/test',
-              },
-            ],
-          },
-        ]
       
     // console.log(user.password)
 
@@ -40,7 +26,6 @@ class LoginController extends Controller {
       currentAuthority: 'admin',
       type: ctx.request.body.type,
       result: user,
-      routeData: routeData
     }
   }
 }

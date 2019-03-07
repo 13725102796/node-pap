@@ -11,5 +11,5 @@ module.exports = app => {
   router.resources('test', '/admin/api/test', controller.admin.test)
 
   // 路由控制
-  router.resources('routeControll', '/admin/api/routeControll', gzip ,controller.admin.routeControll.index)
+  router.resources('routeControll', '/admin/api/routeControll', gzip ,controller.admin.routeControll)
 };

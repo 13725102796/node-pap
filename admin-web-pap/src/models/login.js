@@ -27,7 +27,7 @@ export default {
       if (response.status === 'ok') {
         console.log(response)
         // 添加路由数据
-        const routeData = JSON.stringify(response.routeData)
+        const routeData = JSON.stringify(response.result.routeData)
         localStorage.setItem('routeData', routeData)
         yield put({type: 'menu/setAsyncRoute', routeData})
         reloadAuthorized();

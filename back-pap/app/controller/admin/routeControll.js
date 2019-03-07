@@ -2,7 +2,7 @@
 
 const Controller = require('egg').Controller;
 
-class TestController extends Controller {
+class RouteController extends Controller {
   async index(){
     // console.log(this.ctx)
     const {
@@ -42,5 +42,5 @@ class TestController extends Controller {
   }
 
 }
-module.exports = TestController;
+module.exports = RouteController;
 

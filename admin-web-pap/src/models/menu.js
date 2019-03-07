@@ -47,12 +47,12 @@ const memoizeOneFormatter = memoizeOne(formatter, isEqual);
 /**
  * get SubMenu or Item
  */
-const getSubMenu = item => {
+const getSubMenu = (item,routeData) => {
   // doc: add hideChildrenInMenu
   if (item.children && !item.hideChildrenInMenu && item.children.some(child => child.name)) {
     return {
       ...item,
-      children: filterMenuData(item.children), // eslint-disable-line
+      children: filterMenuData(item.children,routeData), // eslint-disable-line
     };
   }
   return item;
@@ -61,15 +61,25 @@ const getSubMenu = item => {
 /**
  * filter menuData
  */
-const filterMenuData = menuData => {
+const filterMenuData = (menuData,routeData) => {
   if (!menuData) {
     return [];
   }
   return menuData
-    .filter(item => item.name && !item.hideInMenu)
-    .map(item => check(item.authority, getSubMenu(item)))
+    .filter(item => item.name && !item.hideInMenu && routeData.indexOf(item.path) > -1 )
+    .map(item => check(item.authority, getSubMenu(item,routeData)))
     .filter(item => item);
 };
+
+// const filterRouteData = routeData => {
+//   if (!routeData) {
+//     return [];
+//   }
+//   return routeData
+//     .filter(item => item.path && !item.hideInMenu )
+//     .map(item => check(item.authority, getSubMenu(item)))
+//     .filter(item => item);
+// }
 /**
  * 获取面包屑映射
  * @param {Object} menuData 菜单配置
@@ -98,14 +108,25 @@ export default {
   state: {
     menuData: [],
     breadcrumbNameMap: {},
-    asyncRoute: null
+    
   },
 
   effects: {
     *getMenuData({ payload }, { put }) {
-      const { routeData, authority } = payload;
+      const { routes, authority } = payload;
+      // const routeData = [
+      //   "/testPage/test",
+      //   "/testPage",
+      //   "/routePage",
+      //   "/routePage/setting",
+      //   "/dashboard/monitor",
+      //   "/list/search/projects"
+      // ]
+      const routeData = JSON.parse(localStorage.getItem('routeData'))
       console.log(routeData)
-      const menuData = filterMenuData(memoizeOneFormatter(routeData, authority));
+      // 还原路由结构
+      console.log(routes)
+      const menuData = filterMenuData(memoizeOneFormatter(routes, authority),routeData);
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData);
       yield put({
         type: 'save',

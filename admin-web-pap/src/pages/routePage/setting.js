@@ -1,7 +1,7 @@
 
 import React, { PureComponent } from 'react';
 import routePage from '../../../config/router.config.js'
-import { Tree, Icon ,Card } from 'antd';
+import { Button , Tree, Icon ,Card } from 'antd';
 import { connect } from 'dva';
 import { isUrl } from '@/utils/utils';
 import { formatMessage, FormattedMessage } from 'umi/locale';
@@ -34,10 +34,15 @@ const defaultCheck = [
   "/list/search/projects"
 ]
 
-@connect(({ route, loading }) => ({
-  route,
-  loading: loading.models.route,
-}))
+@connect(({ route, loading }) => {
+  console.log(route)
+  console.log(loading)
+  return {
+    route,
+    submitting: loading.effects['route/submit'],
+  }
+  
+})
 class CardList extends PureComponent {
   state = {
     routeData: []
@@ -86,16 +91,17 @@ class CardList extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'route/submit',
-      payload: {action,item},
+      payload: JSON.stringify(this.state.routeData),
     });
-    console.log(this.state.routeData)
+    // console.log(this.state.routeData)
   }
 
   render() {
+    const { submitting } = this.props;
     return (
 
       <Card style={{ width: 600 }}
-        actions={[<div onClick={this.onSubmit}>确认修改</div>]}>
+        actions={[<Button onClick={this.onSubmit} loading={submitting} type="primary" ghost>确认修改</Button>]}>
         <Tree
           checkable
           defaultCheckedKeys={defaultCheck}

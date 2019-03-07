@@ -23,7 +23,7 @@ export default {
       });
     },
     *submit({ payload }, { call, put }) { 
-      const data = yield call( routeApi,'update', payload); 
+      const data = yield call( routeApi,'update', {routeData: payload,id: 1}); 
       
     },
   },
