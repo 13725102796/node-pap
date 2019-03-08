@@ -31,7 +31,7 @@ export default {
         console.log(routeData)
         localStorage.setItem('routeData', routeData)
         localStorage.setItem('token',response.token)
-        yield put({type: 'menu/setAsyncRoute', routeData})
+        // yield put({type: 'menu/setAsyncRoute', routeData})
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();

@@ -20,11 +20,12 @@ class LoginService extends Service {
   //   return {list,totalPage}
 
   // }
-  // async show(id){
-  //   const list = await this.client1().get(dbName, {id: id})
-    
-  //   return {list}
-  // }
+  async index(id){
+    const list = await this.client1().get(dbName, {id: id})
+    console.log(id)
+    console.log(list)
+    return {list}
+  }
 
   async update(option){
     const update_at = Math.floor(new Date().getTime() / 1000)

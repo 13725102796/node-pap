@@ -42,6 +42,7 @@ module.exports = () => {
           return;
         }
       }
+      console.log(decoded.user_id)
       //重置cookie时间
       // ctx.cookies.set('token', token, {
       //   maxAge: 60 * 1000,
@@ -49,7 +50,9 @@ module.exports = () => {
       //   overwrite: true,
       //   signed: false
       // });
+      ctx.user_id = decoded.user_id
       await next();
+
     } else {
       ctx.status = 401;
       ctx.body = {

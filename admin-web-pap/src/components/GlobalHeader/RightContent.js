@@ -201,7 +201,7 @@ export default class GlobalHeaderRight extends PureComponent {
               <Avatar
                 size="small"
                 className={styles.avatar}
-                src={currentUser.avatar}
+                src={currentUser.logo}
                 alt="avatar"
               />
               <span className={styles.name}>{currentUser.name}</span>

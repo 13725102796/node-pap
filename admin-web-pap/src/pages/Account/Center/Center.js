@@ -118,7 +118,8 @@ class Center extends PureComponent {
         ),
       },
     ];
-
+    // 伪造数据
+    // currentUser = 
     return (
       <GridContent className={styles.userCenter}>
         <Row gutter={24}>
@@ -127,11 +128,11 @@ class Center extends PureComponent {
               {currentUser && Object.keys(currentUser).length ? (
                 <div>
                   <div className={styles.avatarHolder}>
-                    <img alt="" src={currentUser.avatar} />
+                    <img alt="" src={currentUser.logo} />
                     <div className={styles.name}>{currentUser.name}</div>
                     <div>{currentUser.signature}</div>
                   </div>
-                  <div className={styles.detail}>
+                  {/* <div className={styles.detail}>
                     <p>
                       <i className={styles.title} />
                       {currentUser.title}
@@ -145,8 +146,8 @@ class Center extends PureComponent {
                       {currentUser.geographic.province.label}
                       {currentUser.geographic.city.label}
                     </p>
-                  </div>
-                  <Divider dashed />
+                  </div> */}
+                  {/* <Divider dashed />
                   <div className={styles.tags}>
                     <div className={styles.tagsTitle}>标签</div>
                     {currentUser.tags.concat(newTags).map(item => (
@@ -188,7 +189,7 @@ class Center extends PureComponent {
                         ))}
                       </Row>
                     </Spin>
-                  </div>
+                  </div> */}
                 </div>
               ) : (
                 'loading...'
