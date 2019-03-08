@@ -9,6 +9,7 @@ import {
 } from './utils';
 import cookie from './cookie'
 
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -87,11 +88,12 @@ export default async function request(url, option) {
     .sha256()
     .update(fingerprint)
     .digest('hex');
-
+  // let token 
   const defaultOptions = {
     credentials: 'include',
     headers: {
-      'x-csrf-token': cookie.getItem('csrfToken') || ''
+      'x-csrf-token': cookie.getItem('csrfToken') || '',
+      'authorization':  localStorage.getItem('token') || ''
     },
   };
   const newOptions = { ...defaultOptions,
@@ -117,7 +119,7 @@ export default async function request(url, option) {
       };
     }
   }
-  console.log(options,'asdfasdf')
+  // console.log(options,'asdfasdf')
   const expirys = options.expirys && 60;
   // options.expirys !== false, return the cache,
   if (options.expirys !== false) {

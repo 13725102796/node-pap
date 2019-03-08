@@ -14,7 +14,15 @@ module.exports = {
   mysql: {
     enable: true,
     package: 'egg-mysql',
-  }
+  },
+  // passport = {
+  //   enable: true,
+  //   package: 'egg-passport',
+  // },
+  // passportGithub = {
+  //   enable: true,
+  //   package: 'egg-passport-github',
+  // }
   
 };
 

@@ -30,6 +30,7 @@ export default {
         const routeData = JSON.stringify(response.result.routeData)
         console.log(routeData)
         localStorage.setItem('routeData', routeData)
+        localStorage.setItem('token',response.token)
         yield put({type: 'menu/setAsyncRoute', routeData})
         reloadAuthorized();
         const urlParams = new URL(window.location.href);

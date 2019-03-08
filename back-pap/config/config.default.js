@@ -55,6 +55,12 @@ module.exports = appInfo => {
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1550453563025_8140';
+  // config.passportGithub = {
+  //   key: 'your_clientID',
+  //   secret: 'your_clientSecret',
+  //   // callbackURL: '/passport/github/callback',
+  //   // proxy: false,
+  // }
 
 
 
