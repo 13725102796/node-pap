@@ -14,7 +14,7 @@ class LoginController extends Controller {
     const body = {
       status: 'ok',
       msg: '操作成功',
-      currentAuthority: 'admin',
+      // currentAuthority: 'admin',
       type: ctx.request.body.type,
       result: user,
     }

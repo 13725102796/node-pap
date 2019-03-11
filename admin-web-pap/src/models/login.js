@@ -31,8 +31,7 @@ export default {
         console.log(routeData)
         localStorage.setItem('routeData', routeData)
         localStorage.setItem('token',response.token)
-        // yield put({type: 'menu/setAsyncRoute', routeData})
-        reloadAuthorized();
+        // reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params;
@@ -64,7 +63,7 @@ export default {
           currentAuthority: 'guest',
         },
       });
-      reloadAuthorized();
+      // reloadAuthorized();
       yield put(
         routerRedux.push({
           pathname: '/user/login',
@@ -78,7 +77,8 @@ export default {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+
+      // setAuthority('admin');
       return {
         ...state,
         status: payload.status,

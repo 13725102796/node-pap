@@ -52,6 +52,7 @@ const query = {
 };
 
 class BasicLayout extends React.Component {
+  
   constructor(props) {
     super(props);
     this.getPageTitle = memoizeOne(this.getPageTitle);
@@ -64,6 +65,7 @@ class BasicLayout extends React.Component {
       route: { routes, authority },
     } = this.props;
     console.log(routes)
+    
     dispatch({
       type: 'user/fetchCurrent',
     });
@@ -175,16 +177,20 @@ class BasicLayout extends React.Component {
       breadcrumbNameMap,
       route: { routes },
       fixedHeader,
+      dispatch,
     } = this.props;
-    // 判断是否由当前权限路径
+    // 判断是否存在当前权限路径
     let checkPremission 
     const routeDate = localStorage.getItem('routeData')
-    if(routeDate.indexOf(pathname) > -1 ) checkPremission = true
-    // console.log(pathname) 
-    // console.log(routes)
+    if(!routeDate) {
+      dispatch({
+        type: 'login/logout',
+      })
+    } else {
+      if(routeDate.indexOf(pathname) > -1 ) checkPremission = true
+    }
     const isTop = PropsLayout === 'topmenu';
     const routerConfig = this.getRouteAuthority(pathname, routes);
-    console.log(routerConfig)
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
     const layout = (
       <Layout>
@@ -212,10 +218,11 @@ class BasicLayout extends React.Component {
             {...this.props}
           />
           <Content className={styles.content} style={contentStyle}>
-            <Authorized authority={routerConfig} noMatch={<Exception403 />}>
+            {checkPremission ? children : (<Exception403 />)}
+            {/* <Authorized authority={routerConfig} noMatch={<Exception403 />}>
 
               {checkPremission ? children : (<Exception403 />)}
-            </Authorized>
+            </Authorized> */}
           </Content>
           <Footer />
         </Layout>
