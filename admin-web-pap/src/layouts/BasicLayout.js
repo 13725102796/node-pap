@@ -114,6 +114,7 @@ class BasicLayout extends React.Component {
           }
         }
       });
+      // console.log(authorities)
       return authorities;
     };
 
@@ -175,9 +176,15 @@ class BasicLayout extends React.Component {
       route: { routes },
       fixedHeader,
     } = this.props;
-
+    // 判断是否由当前权限路径
+    let checkPremission 
+    const routeDate = localStorage.getItem('routeData')
+    if(routeDate.indexOf(pathname) > -1 ) checkPremission = true
+    // console.log(pathname) 
+    // console.log(routes)
     const isTop = PropsLayout === 'topmenu';
     const routerConfig = this.getRouteAuthority(pathname, routes);
+    console.log(routerConfig)
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
     const layout = (
       <Layout>
@@ -206,7 +213,8 @@ class BasicLayout extends React.Component {
           />
           <Content className={styles.content} style={contentStyle}>
             <Authorized authority={routerConfig} noMatch={<Exception403 />}>
-              {children}
+
+              {checkPremission ? children : (<Exception403 />)}
             </Authorized>
           </Content>
           <Footer />

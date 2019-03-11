@@ -65,8 +65,8 @@ const filterMenuData = (menuData,routeData) => {
   if (!menuData) {
     return [];
   }
-  console.warn( typeof menuData)
-  console.warn( typeof routeData);
+  // console.warn( typeof menuData)
+  // console.warn( typeof routeData);
   return menuData
     .filter(item => item.name && !item.hideInMenu && routeData.indexOf(item.path) > -1 )
     .map(item => check(item.authority, getSubMenu(item,routeData)))
@@ -118,6 +118,7 @@ export default {
       const { routes, authority } = payload;
       const routeData = localStorage.getItem('routeData')
       const menuData = filterMenuData(memoizeOneFormatter(routes, authority),routeData);
+      console.log(menuData)
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData);
       yield put({
         type: 'save',

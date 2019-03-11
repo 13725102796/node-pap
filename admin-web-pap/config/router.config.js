@@ -106,7 +106,7 @@ export default [
           {
             path: '/form/advanced-form',
             name: 'advancedform',
-            authority: ['admin'],
+            authority: ['user'],
             component: './Forms/AdvancedForm',
           },
         ],
@@ -142,6 +142,7 @@ export default [
                 redirect: '/list/search/articles',
               },
               {
+                authority: ['user'],
                 path: '/list/search/articles',
                 name: 'articles',
                 component: './List/Articles',
@@ -259,6 +260,7 @@ export default [
           {
             path: '/account/settings',
             name: 'settings',
+            authority: ['user'],
             component: './Account/Settings/Info',
             routes: [
               {
