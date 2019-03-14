@@ -16,11 +16,12 @@ module.exports = () => {
       } catch (error) {
         if (error.name == 'TokenExpiredError') {
           console.log('时间到期')
-          
+          ctx.status = 401;
           ctx.body = {
-            msg: 'token时间到期',
+            msg: '登录时间已过期，请重新登录',
             status: 'error'
           }
+          return 
           //重新发放令牌
           // token = jwt.sign({
           //   user_id: 1,
@@ -37,12 +38,13 @@ module.exports = () => {
         } else {
           ctx.status = 401;
           ctx.body = {
-            message: 'token失效'
+            message: 'token失效',
+            status: 'error'
           }
           return;
         }
       }
-      console.log(decoded.user_id)
+      // console.log(decoded.user_id)
       //重置cookie时间
       // ctx.cookies.set('token', token, {
       //   maxAge: 60 * 1000,

@@ -158,11 +158,13 @@ export default async function request(url, option) {
           message: `响应错误`,
           description: res.msg,
         });
+
         // const error = new Error(res.msg);
         // error.name =res.err_code;
         // error.response = res;
         // throw error;
       }
+      
       return res
       
       

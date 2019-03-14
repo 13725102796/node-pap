@@ -5,6 +5,6 @@ export async function query() {
 }
 
 export async function queryCurrent() {
-  // return request(fontUrl + '/api/routeControll')
-  return request('/api/currentUser');
+  return request(fontUrl + '/api/routeControll')
+  // return request('/api/currentUser');
 }

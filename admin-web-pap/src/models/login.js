@@ -5,6 +5,7 @@ import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
 
+import md5 from 'js-md5'
 export default {
   namespace: 'login',
 
@@ -15,6 +16,8 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
+      console.log(payload)
+      payload.password = md5(payload.password)
       console.log(payload)
       const response = yield call(fakeAccountLogin, payload);
       console.log(response)
