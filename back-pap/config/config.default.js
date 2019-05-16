@@ -24,7 +24,7 @@ module.exports = appInfo => {
           // 用户名
           user: 'root',
           // 密码
-          password: 'zyc188208-',
+          password: '188208',
           // 数据库名
           database: 'admin-pap',
         },
@@ -32,7 +32,7 @@ module.exports = appInfo => {
           // 用户名
           user: 'root',
           // 密码
-          password: 'zyc188208-',
+          password: '188208',
           // 数据库名
           database: 'web-pap',
         },
